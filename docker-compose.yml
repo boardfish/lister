@@ -1,0 +1,30 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+  web:
+    build: .
+    command: ["bundle && yarn && bundle exec rails server -b 0.0.0.0"]
+    volumes:
+      - .:/usr/src/app
+      - bundle_cache:/bundle_cache
+    tmpfs: /usr/src/app/tmp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      REDIS_URL: redis://redis
+      DATABASE_URL: postgres://postgres:password@db:5432
+  bundle_cache:
+    image: busybox
+    volumes:
+      - bundle_cache:/bundle_cache
+  redis:
+    image: redis
+volumes:
+  bundle_cache:

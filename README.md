@@ -1,24 +1,22 @@
-# README
+# Lister
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Installation
 
-Things you may want to cover:
+### Prerequisites
 
-* Ruby version
+If you're familiar with Docker, that and `docker-compose` are all you'll need.
 
-* System dependencies
+If not, you'll need a local PostgreSQL installation and Ruby 2.7.2 installed.
 
-* Configuration
+### Docker
 
-* Database creation
+Run `docker-compose up` to build the containers and bring up the environment.
+Then, in a separate terminal, use `docker-compose exec web bundle exec rails
+db:setup` to create and migrate the database.
 
-* Database initialization
+### Local
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Ensure PostgreSQL is running. Then, run `bundle` to install all Ruby
+dependencies and `yarn` to install JS dependencies. After that, set up the
+database with `bundle exec rails db:setup`, then run the app with `bundle exec
+rails s`.
